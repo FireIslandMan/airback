@@ -413,7 +413,7 @@ class AirPlayService : LifecycleService(), RaopCallbackHandler, LogListener {
         val advertiseMirroring = prefs[Prefs.ADVERTISE_MIRRORING]
         val advertiseAudio = prefs[Prefs.ADVERTISE_AUDIO]
         NativeBridge.nativeSetHlsEnabled(nativeHandle, advertiseVideo)
-        NativeBridge.nativeSetLang(nativeHandle, "", "", resources.configuration.locales.toLanguageTags().replace(',', ':'))
+        NativeBridge.nativeSetLang(nativeHandle, resources.configuration.locales.toLanguageTags().replace(',', ':'))
         NativeBridge.nativeSetFeature(nativeHandle, NativeBridge.FT_MIRROR, advertiseMirroring)
         NativeBridge.nativeSetFeature(nativeHandle, NativeBridge.FT_AUDIO, advertiseAudio)
         NativeBridge.nativeSetPlist(nativeHandle, "maxFPS", maxFps)

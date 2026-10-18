@@ -6,7 +6,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <memory>
-#include <string>
 #include <android/log.h>
 
 extern "C" {
@@ -32,7 +31,6 @@ typedef struct {
     android_callback_ctx_t cb_ctx;
     raop_callbacks_t callbacks;
     char hw_addr[6];
-    std::string lang_requested, lang_subtitles, lang_system;
     std::shared_ptr<LogSink> log;
 } server_ctx_t;
 
@@ -61,7 +59,6 @@ Java_io_github_jqssun_airplay_bridge_NativeBridge_nativeInit(
     ctx->cb_ctx.require_pin = requirePin ? 1 : 0;
     android_callbacks_fill(&ctx->callbacks, &ctx->cb_ctx);
 
-    ntp_global_init();
     ctx->raop = raop_init(&ctx->callbacks);
     if (!ctx->raop) {
         LOGE("raop_init failed");
@@ -101,7 +98,7 @@ Java_io_github_jqssun_airplay_bridge_NativeBridge_nativeInit(
     /* shim dnssd_init only builds txt records; kotlin does the actual nsd registration */
     int dns_err = 0;
     unsigned char pin_pw = requirePin ? 1 : 0;
-    ctx->dnssd = dnssd_init(name_c, (int)strlen(name_c), ctx->hw_addr, 6, pin_pw, &dns_err);
+    ctx->dnssd = dnssd_init(name_c, (int)strlen(name_c), ctx->hw_addr, 6, &dns_err, pin_pw);
     if (!ctx->dnssd) {
         LOGE("dnssd_init failed: %d", dns_err);
     } else {
@@ -317,19 +314,13 @@ Java_io_github_jqssun_airplay_bridge_NativeBridge_nativeSetHlsEnabled(
 extern "C"
 JNIEXPORT void JNICALL
 Java_io_github_jqssun_airplay_bridge_NativeBridge_nativeSetLang(
-        JNIEnv *env, jobject thiz, jlong handle, jstring requested, jstring subtitles, jstring system) {
+        JNIEnv *env, jobject thiz, jlong handle, jstring lang) {
 
     server_ctx_t *ctx = (server_ctx_t *)(intptr_t)handle;
     if (!ctx || !ctx->raop) return;
-    auto take = [env](jstring js, std::string &out) {
-        const char *c = env->GetStringUTFChars(js, NULL);
-        out = c;
-        env->ReleaseStringUTFChars(js, c);
-    };
-    take(requested, ctx->lang_requested);
-    take(subtitles, ctx->lang_subtitles);
-    take(system, ctx->lang_system);
-    raop_set_lang(ctx->raop, ctx->lang_requested.c_str(), ctx->lang_subtitles.c_str(), ctx->lang_system.c_str());
+    const char *c = env->GetStringUTFChars(lang, NULL);
+    raop_set_lang(ctx->raop, c);
+    env->ReleaseStringUTFChars(lang, c);
 }
 
 extern "C"
