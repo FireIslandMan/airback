@@ -192,6 +192,12 @@ class AirPlayService : LifecycleService(), RaopCallbackHandler, LogListener {
             // ui replay only: binding the activity must not mint a new native pin
             value?.invoke(_lastPin)
         }
+    // Invoked on the main thread when the last sender disconnects from a session that this service
+    // brought the activity forward for. The activity uses it to step out of the way again.
+    var disconnectCallback: (() -> Unit)? = null
+    // Kept current by MainActivity between onStart and onStop
+    @Volatile var activityVisible = false
+    @Volatile private var launchedOnConnect = false
 
     private fun log(msg: String) {
         Log.i(TAG, msg)
@@ -787,6 +793,10 @@ class AirPlayService : LifecycleService(), RaopCallbackHandler, LogListener {
             mediaSession?.isActive = false
             _refreshDacpPlayer()
             _updateMediaNotification()
+            if (launchedOnConnect && prefs[Prefs.RETURN_ON_DISCONNECT]) {
+                _mainHandler.post { disconnectCallback?.invoke() }
+            }
+            launchedOnConnect = false
         }
         log("Client disconnected (${_connectionCount.value})")
     }
@@ -1110,6 +1120,9 @@ class AirPlayService : LifecycleService(), RaopCallbackHandler, LogListener {
 
     private fun launchMainActivity() {
         Handler(Looper.getMainLooper()).post {
+            // only step back out afterwards if the user was not already looking at us
+            launchedOnConnect = !activityVisible
+            wakeDisplayForConnect()
             val launchIntent = Intent(this, MainActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             try {
@@ -1117,6 +1130,27 @@ class AirPlayService : LifecycleService(), RaopCallbackHandler, LogListener {
             } catch (e: Exception) {
                 Log.w(TAG, "Failed to launch activity", e)
             }
+        }
+    }
+
+    // A screensaver (dream) or a dark screen sits above any activity we start, so the mirror stays
+    // invisible until the dream times out on its own (30 s on a Google TV in testing). Waking the
+    // display through PowerManager ends the dream at once. SCREEN_BRIGHT_WAKE_LOCK is deprecated,
+    // but it is the only wake-up path open to an app; the lock is held for a moment only, and the
+    // activity's keep-screen-on flag takes over from there.
+    private fun wakeDisplayForConnect() {
+        try {
+            val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
+            @Suppress("DEPRECATION")
+            val wl = pm.newWakeLock(
+                PowerManager.SCREEN_BRIGHT_WAKE_LOCK or
+                    PowerManager.ACQUIRE_CAUSES_WAKEUP or
+                    PowerManager.ON_AFTER_RELEASE,
+                "airplay:connect"
+            )
+            wl.acquire(3_000L)
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to wake display", e)
         }
     }
 

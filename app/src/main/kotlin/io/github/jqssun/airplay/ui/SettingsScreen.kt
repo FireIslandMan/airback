@@ -48,6 +48,7 @@ fun SettingsScreen(viewModel: MainViewModel) {
     val advertiseMirroring by viewModel.pref(Prefs.ADVERTISE_MIRRORING).collectAsState()
     val advertiseAudio by viewModel.pref(Prefs.ADVERTISE_AUDIO).collectAsState()
     val launchOnConnect by viewModel.pref(Prefs.LAUNCH_ON_CONNECT).collectAsState()
+    val returnOnDisconnect by viewModel.pref(Prefs.RETURN_ON_DISCONNECT).collectAsState()
     val maxFps by viewModel.pref(Prefs.MAX_FPS).collectAsState()
     val overscanned by viewModel.pref(Prefs.OVERSCANNED).collectAsState()
     val requirePin by viewModel.pref(Prefs.REQUIRE_PIN).collectAsState()
@@ -167,6 +168,12 @@ fun SettingsScreen(viewModel: MainViewModel) {
             trailingContent = {
                 Switch(checked = launchOnConnect, onCheckedChange = null)
             }
+        )
+        SettingSwitch(
+            title = stringResource(R.string.setting_return_on_disconnect),
+            description = stringResource(R.string.setting_return_on_disconnect_desc),
+            checked = returnOnDisconnect,
+            onCheckedChange = { viewModel.set(Prefs.RETURN_ON_DISCONNECT, it) }
         )
 
         SectionHeader(stringResource(R.string.section_display))

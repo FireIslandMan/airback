@@ -42,6 +42,11 @@ class MainActivity : ComponentActivity() {
     val isInPip = mutableStateOf(false)
     private val logCallback: (String) -> Unit = { viewModel.addLog(it) }
     private val pinCallback: (String?) -> Unit = { viewModel.showPin(it) }
+    // The service brought us forward for a session that just ended: give the screen back to
+    // whatever was showing before (a TV input, another app) instead of sitting on an idle view.
+    private val disconnectCallback: () -> Unit = {
+        if (!isFinishing && !isInPip.value) moveTaskToBack(true)
+    }
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
@@ -49,6 +54,8 @@ class MainActivity : ComponentActivity() {
             service = svc
             svc.logCallback = logCallback
             svc.pinCallback = pinCallback
+            svc.disconnectCallback = disconnectCallback
+            svc.activityVisible = lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
             viewModel.bindService(svc)
             if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) _refreshForeground()
             _autoStart()
@@ -66,6 +73,21 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // On a TV the service brings this activity forward when a sender connects. Without these
+        // the mirror sits behind the screensaver or a dark panel until the system wakes on its own.
+        if (packageManager.hasSystemFeature(PackageManager.FEATURE_LEANBACK)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                setShowWhenLocked(true)
+                setTurnScreenOn(true)
+            } else {
+                @Suppress("DEPRECATION")
+                window.addFlags(
+                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                )
+            }
+        }
 
         val missing = buildList {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !_granted(Manifest.permission.POST_NOTIFICATIONS)) {
@@ -165,6 +187,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
+        service?.activityVisible = true
         _syncLocalNetwork()
         _refreshForeground()
     }
@@ -201,6 +224,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onStop() {
         super.onStop()
+        service?.activityVisible = false
         // never stop mid-session
         if (!viewModel.pref(Prefs.RUN_IN_BACKGROUND).value && !isChangingConfigurations &&
             viewModel.serverState.value == AirPlayService.ServerState.RUNNING &&
@@ -213,6 +237,7 @@ class MainActivity : ComponentActivity() {
         service?.let {
             if (it.logCallback === logCallback) it.logCallback = null
             if (it.pinCallback === pinCallback) it.pinCallback = null
+            if (it.disconnectCallback === disconnectCallback) it.disconnectCallback = null
         }
         unbindService(connection)
         super.onDestroy()
