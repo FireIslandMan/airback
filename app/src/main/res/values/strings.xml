@@ -31,6 +31,12 @@
     <string name="local_network_desc">Allow access to nearby devices so AirPlay devices can find and connect to this device</string>
     <string name="unknown_track">Unknown</string>
 
+    <!-- First-run overlay permission prompt -->
+    <string name="overlay_prompt_title">Let AirBack take the screen when you connect</string>
+    <string name="overlay_prompt_text">So the TV switches to your iPhone the moment it connects, allow AirBack to display over other apps. One-time setting.</string>
+    <string name="overlay_prompt_manual">This TV hides that screen. Open Settings, then Apps, then Special app access, then Display over other apps, and allow AirBack.</string>
+    <string name="btn_not_now">Not now</string>
+
     <!-- Content descriptions -->
     <string name="cd_pip">Picture-in-Picture</string>
     <string name="cd_fullscreen">Fullscreen</string>

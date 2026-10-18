@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.content.ActivityNotFoundException
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -140,7 +141,9 @@ class MainActivity : ComponentActivity() {
                     onSurfaceAvailable = { viewModel.onSurfaceAvailable(it) },
                     onSurfaceDestroyed = { viewModel.onSurfaceDestroyed(it) },
                     onPip = { enterPip() },
-                    onLocalNetwork = ::_requestLocalNetwork
+                    onLocalNetwork = ::_requestLocalNetwork,
+                    onOverlayAllow = ::_requestOverlay,
+                    onOverlayDismiss = { viewModel.dismissOverlayPrompt() }
                 )
             }
         }
@@ -189,7 +192,35 @@ class MainActivity : ComponentActivity() {
         super.onStart()
         service?.activityVisible = true
         _syncLocalNetwork()
+        _syncOverlayPrompt()
         _refreshForeground()
+    }
+
+    private fun _needsOverlayPermission(): Boolean =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+            packageManager.hasSystemFeature(PackageManager.FEATURE_LEANBACK) &&
+            viewModel.pref(Prefs.LAUNCH_ON_CONNECT).value &&
+            !Settings.canDrawOverlays(this)
+
+    // Re-evaluated on every start, so the card disappears as soon as the permission is granted
+    private fun _syncOverlayPrompt() {
+        val vm = viewModel
+        if (!_needsOverlayPermission() || vm.overlayPromptDismissed) {
+            vm.setOverlayPrompt(MainViewModel.OverlayPrompt.HIDDEN)
+        } else if (vm.overlayPrompt.value == MainViewModel.OverlayPrompt.HIDDEN) {
+            vm.setOverlayPrompt(MainViewModel.OverlayPrompt.ASK)
+        }
+    }
+
+    private fun _requestOverlay() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return
+        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName"))
+        try {
+            startActivity(intent)
+        } catch (_: ActivityNotFoundException) {
+            // some TV builds ship without the per-app overlay screen; point at the Apps settings path
+            viewModel.setOverlayPrompt(MainViewModel.OverlayPrompt.MANUAL)
+        }
     }
 
     fun enterPip() {

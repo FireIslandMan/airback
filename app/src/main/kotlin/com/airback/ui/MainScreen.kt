@@ -92,7 +92,9 @@ fun MainScreen(
     onSurfaceAvailable: (android.view.Surface) -> Unit,
     onSurfaceDestroyed: (android.view.Surface) -> Unit,
     onPip: () -> Unit = {},
-    onLocalNetwork: () -> Unit = {}
+    onLocalNetwork: () -> Unit = {},
+    onOverlayAllow: () -> Unit = {},
+    onOverlayDismiss: () -> Unit = {}
 ) {
     var tab by remember { mutableStateOf(Tab.OVERVIEW) }
     var fullscreen by remember { mutableStateOf(false) }
@@ -540,6 +542,7 @@ fun MainScreen(
                 TabContent(
                     tab, viewModel, video,
                     onFullscreen = { fullscreen = true }, onPip = onPip, onLocalNetwork = onLocalNetwork,
+                    onOverlayAllow = onOverlayAllow, onOverlayDismiss = onOverlayDismiss,
                     showAudioMode = audioOnly
                 )
             }
@@ -575,12 +578,15 @@ private fun TabContent(
     onFullscreen: () -> Unit,
     onPip: () -> Unit,
     onLocalNetwork: () -> Unit,
+    onOverlayAllow: () -> Unit,
+    onOverlayDismiss: () -> Unit,
     showAudioMode: Boolean
 ) {
     when (tab) {
         Tab.OVERVIEW -> OverviewContent(
             viewModel, video,
-            onFullscreen = onFullscreen, onPip = onPip, onLocalNetwork = onLocalNetwork, showAudioMode = showAudioMode
+            onFullscreen = onFullscreen, onPip = onPip, onLocalNetwork = onLocalNetwork,
+            onOverlayAllow = onOverlayAllow, onOverlayDismiss = onOverlayDismiss, showAudioMode = showAudioMode
         )
         Tab.LOGS -> LogsScreen(viewModel)
         Tab.SETTINGS -> SettingsScreen(viewModel)
@@ -594,10 +600,13 @@ private fun OverviewContent(
     onFullscreen: () -> Unit,
     onPip: () -> Unit,
     onLocalNetwork: () -> Unit,
+    onOverlayAllow: () -> Unit = {},
+    onOverlayDismiss: () -> Unit = {},
     showAudioMode: Boolean = false
 ) {
     val state by viewModel.serverState.collectAsState()
     val localNetwork by viewModel.localNetwork.collectAsState()
+    val overlayPrompt by viewModel.overlayPrompt.collectAsState()
     val grant = state != ServerState.RUNNING && localNetwork != LocalNetworkAccess.GRANTED
     val connections by viewModel.connectionCount.collectAsState()
     val serverName by viewModel.pref(Prefs.SERVER_NAME).collectAsState()
@@ -609,8 +618,12 @@ private fun OverviewContent(
     val debugInfo by viewModel.debugInfo.collectAsState()
     val tv = isTv()
     val startFocus = remember { FocusRequester() }
+    val overlayFocus = remember { FocusRequester() }
     LaunchedEffect(Unit) {
         if (tv) startFocus.requestFocus()
+    }
+    LaunchedEffect(overlayPrompt) {
+        if (tv && overlayPrompt != MainViewModel.OverlayPrompt.HIDDEN) overlayFocus.requestFocus()
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -698,6 +711,51 @@ private fun OverviewContent(
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
                     )
+                }
+            }
+        }
+
+        // first-run: permission that lets the service bring this screen forward on connect
+        if (overlayPrompt != MainViewModel.OverlayPrompt.HIDDEN) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
+            ) {
+                Column(modifier = Modifier.padding(20.dp)) {
+                    Text(
+                        text = stringResource(R.string.overlay_prompt_title),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        text = stringResource(
+                            if (overlayPrompt == MainViewModel.OverlayPrompt.MANUAL) R.string.overlay_prompt_manual
+                            else R.string.overlay_prompt_text
+                        ),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Spacer(Modifier.height(12.dp))
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        FilledTonalButton(
+                            onClick = onOverlayAllow,
+                            modifier = Modifier.dpadFocus().focusRequester(overlayFocus)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Settings,
+                                contentDescription = null,
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(Modifier.width(6.dp))
+                            Text(stringResource(R.string.btn_open_settings))
+                        }
+                        TextButton(onClick = onOverlayDismiss, modifier = Modifier.dpadFocus()) {
+                            Text(stringResource(R.string.btn_not_now))
+                        }
+                    }
                 }
             }
         }

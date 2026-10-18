@@ -31,6 +31,12 @@
     <string name="local_network_desc">Permite el acceso a dispositivos cercanos para que los dispositivos AirPlay puedan encontrar este dispositivo y conectarse</string>
     <string name="unknown_track">Desconocido</string>
 
+    <!-- First-run overlay permission prompt -->
+    <string name="overlay_prompt_title">Deja que AirBack tome la pantalla al conectar</string>
+    <string name="overlay_prompt_text">Para que el televisor cambie a tu iPhone en cuanto se conecta, permite que AirBack se muestre sobre otras aplicaciones. Se configura una sola vez.</string>
+    <string name="overlay_prompt_manual">Este televisor no muestra esa pantalla. Abre Ajustes, luego Aplicaciones, Acceso especial de aplicaciones, Mostrar sobre otras aplicaciones, y permite AirBack.</string>
+    <string name="btn_not_now">Ahora no</string>
+
     <!-- Content descriptions -->
     <string name="cd_pip">Imagen en imagen</string>
     <string name="cd_fullscreen">Pantalla completa</string>

@@ -127,6 +127,16 @@ class MainViewModel @Inject constructor(app: Application) : AndroidViewModel(app
     val localNetwork: StateFlow<LocalNetworkAccess> = _localNetwork.asStateFlow()
     fun setLocalNetwork(v: LocalNetworkAccess) { _localNetwork.value = v }
 
+    // First-run prompt for "Display over other apps" (TV only, Android 10+). Without it the system
+    // blocks the service from bringing this activity forward when a sender connects.
+    enum class OverlayPrompt { HIDDEN, ASK, MANUAL }
+    private val _overlayPrompt = MutableStateFlow(OverlayPrompt.HIDDEN)
+    val overlayPrompt: StateFlow<OverlayPrompt> = _overlayPrompt.asStateFlow()
+    // "Not now" hides the prompt for this process only; it comes back on the next launch
+    var overlayPromptDismissed = false
+    fun setOverlayPrompt(v: OverlayPrompt) { _overlayPrompt.value = v }
+    fun dismissOverlayPrompt() { overlayPromptDismissed = true; _overlayPrompt.value = OverlayPrompt.HIDDEN }
+
     // audio mode
     private val _audioOnly = MutableStateFlow(false)
     val audioOnly: StateFlow<Boolean> = _audioOnly.asStateFlow()
