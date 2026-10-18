@@ -1,8 +1,8 @@
 # Keep JNI callback interface (called from native code)
--keep class io.github.jqssun.airplay.bridge.RaopCallbackHandler { *; }
--keep class * implements io.github.jqssun.airplay.bridge.RaopCallbackHandler { *; }
--keep class io.github.jqssun.airplay.bridge.LogListener { *; }
--keep class * implements io.github.jqssun.airplay.bridge.LogListener { *; }
+-keep class com.airback.bridge.RaopCallbackHandler { *; }
+-keep class * implements com.airback.bridge.RaopCallbackHandler { *; }
+-keep class com.airback.bridge.LogListener { *; }
+-keep class * implements com.airback.bridge.LogListener { *; }
 
 # Keep NativeBridge native methods
--keep class io.github.jqssun.airplay.bridge.NativeBridge { *; }
+-keep class com.airback.bridge.NativeBridge { *; }

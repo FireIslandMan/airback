@@ -185,7 +185,9 @@ Built, installed and verified on the TCL set:
 
 Marketing angles from the above, in the owner's words: auto-restore on disconnect ("it gives you your TV back"), no ads, no spinner when the TV is asleep or on another input, works in Spanish. The DRM caveat still goes in the listing's first line.
 
-Not done yet: package rename and branding (waiting on the product name), the first-run flow that requests the overlay permission, Play listing, release signing.
+Name decided 2026-10-18: **AirBack**, package `com.airback` (checked clear on Play and the App Store; AirMirror, AirTV, AirDisplay, AirCast, AirConnect, AirView, AirShow, AirStage and AirFrame are all taken or trademarked). Rename, launcher icon, TV banner and README credit are done and verified on the TCL set: fresh install came up as "Living Room TV", surfaced over DirecTV 50 ms after connect, restored the input 20 ms after disconnect.
+
+Not done yet: the first-run flow that asks for the "Display over other apps" permission (granted over ADB on the test TV), the Play listing and fastlane metadata, release signing, and the versionCode reset for a 1.0.
 
 ## Open questions for Gamalier
 

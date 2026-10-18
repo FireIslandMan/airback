@@ -1,18 +1,17 @@
-# AirPlay Receiver for Android
+# AirBack
 
-[![Stars](https://img.shields.io/github/stars/jqssun/android-airplay-server)](https://github.com/jqssun/android-airplay-server)
-[![GitHub](https://img.shields.io/github/downloads/jqssun/android-airplay-server/total?label=GitHub&logo=GitHub)](https://github.com/jqssun/android-airplay-server/releases)
-[![license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/jqssun/android-airplay-server/blob/main/LICENSE)
-[![build](https://img.shields.io/github/actions/workflow/status/jqssun/android-airplay-server/apk.yml?label=build)](https://github.com/jqssun/android-airplay-server/actions/workflows/apk.yml)
-[![release](https://img.shields.io/github/v/release/jqssun/android-airplay-server)](https://github.com/jqssun/android-airplay-server/releases)
+AirPlay receiver for Google TV and Android TV that gives you your TV back: mirror or cast from an iPhone, iPad or Mac, and when the session ends the TV returns to whatever was on before. No ads. English and Spanish.
 
-A fully featured free and open-source implementation of AirPlay for Android that turns your device into an AirPlay-compatible display and speaker, based on [UxPlay](https://github.com/FDH2/UxPlay). It is the first open-source AirPlay 2 receiver for Android and Android TV, and works with iOS/iPadOS, macOS devices as well as other sender implementations.
+AirBack is a fork of [jqssun/android-airplay-server](https://github.com/jqssun/android-airplay-server), the first open-source AirPlay 2 receiver for Android, which is built on [UxPlay](https://github.com/FDH2/UxPlay). Both are GPL-3.0 and so is AirBack; see [LICENSE](LICENSE). Protocol work belongs upstream, and fixes that are not branding are offered back as pull requests.
 
-[<img height="48" alt="Get it on Google Play" src="https://jqssun.github.io/images/badges/google-play-store.svg">](https://play.google.com/store/apps/details?id=io.github.jqssun.airplay)
-[<img height="48" alt="Get it on F-Droid" src="https://jqssun.github.io/images/badges/fdroid.svg">](https://f-droid.org/packages/io.github.jqssun.airplay)
-[<img height="48" alt="Get it on GitHub" src="https://jqssun.github.io/images/badges/github.svg">](https://github.com/jqssun/android-airplay-server/releases/latest)
+What AirBack changes on top of upstream:
 
-<video loop src='https://github.com/user-attachments/assets/79ed7c0c-0102-43cc-8816-4f00ce6a4199' alt="demo" width="200" style="display: block; margin: auto;"></video>
+- The receiver is named after the TV's own device name on first launch, so two receivers on one network never collide.
+- The display wakes and the receiver comes forward the moment a sender connects, over the screensaver or a live TV input.
+- Auto-restore on disconnect: when the last sender drops, the TV goes back to the previous input or app.
+- Spanish localization.
+
+DRM-protected video (Apple TV+, Netflix, Disney+) cannot be received by any third-party AirPlay receiver, AirBack included.
 
 ## Compatibility
 
@@ -43,14 +42,14 @@ On devices without a display, settings can also be changed over ADB. The receive
 
 ```bash
 export KEY="server_name" VALUE="Speaker"
-am broadcast -n io.github.jqssun.airplay/.SettingsReceiver -a io.github.jqssun.airplay.SET_SETTING --es key "$KEY" --es value "$VALUE"
+am broadcast -n com.airback/.SettingsReceiver -a com.airback.SET_SETTING --es key "$KEY" --es value "$VALUE"
 ```
 
 To list all settings with their current values as JSON:
 
 ```bash
-am start -n io.github.jqssun.airplay/.MainActivity
-am broadcast -n io.github.jqssun.airplay/.SettingsReceiver -a io.github.jqssun.airplay.LIST_SETTINGS
+am start -n com.airback/.MainActivity
+am broadcast -n com.airback/.SettingsReceiver -a com.airback.LIST_SETTINGS
 ```
 
 ## Implementation
@@ -80,7 +79,7 @@ git submodule update --init --recursive
 ./gradlew assembleDebug
 ```
 
-Check out the [CI](https://github.com/jqssun/android-airplay-server/blob/main/.github/workflows/apk.yml) for more details on reproducible builds.
+Check out the [CI](.github/workflows/apk.yml) for more details on reproducible builds.
 
 ## Credits
 
