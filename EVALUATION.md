@@ -113,12 +113,12 @@ Kill criteria: if the Play listing does not reach 50 paid installs in its first 
 
 ## Install on the Google TV
 
-Target found on the LAN: "Living Room TV", Cast model "Smart TV Pro", Cast firmware 3.72.446070, IP 192.168.40.110. ADB over TCP on port 5555 is enabled on it. At the time of writing the Mac is listed as `unauthorized`, which means the TV is showing an "Allow USB debugging?" prompt that has to be accepted with the remote (tick "Always allow from this computer").
+Target found on the LAN: "Living Room TV", Cast model "Smart TV Pro", IP <tv-lan-ip>. ADB over TCP on port 5555 is enabled on it. At the time of writing the Mac is listed as `unauthorized`, which means the TV is showing an "Allow USB debugging?" prompt that has to be accepted with the remote (tick "Always allow from this computer").
 
 Install command once authorized:
 
 ```bash
-~/Library/Android/sdk/platform-tools/adb connect 192.168.40.110:5555 && ~/Library/Android/sdk/platform-tools/adb install -r app/build/outputs/apk/debug/app-debug.apk
+~/Library/Android/sdk/platform-tools/adb connect <tv-lan-ip>:5555 && ~/Library/Android/sdk/platform-tools/adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
 Install status: done. Authorized, installed with `adb install -r`, launched, server started on port 7000 and registered `_airplay._tcp` and `_raop._tcp` as "Android AirPlay" within one second (visible from the Mac with `dns-sd -B _airplay._tcp local`). Screenshot of the first launch: `tv-first-launch.png`.
@@ -143,7 +143,7 @@ First-launch observations:
 
 ## Mirroring test result (Mac sender, 2026-10-18, 17:24 to 17:35)
 
-The iPhone was not available to this session, so the Mac mirrored its built-in display to "Android AirPlay" from System Settings > Displays. The Mac uses the same mirroring path (H.264 stream over the legacy AirPlay protocol) that UxPlay decodes for an iPhone, so this exercises the decoder, the surface and the MediaTek SELinux policy that issue #50 is about. Screenshot of the TV mid-session: `tv-mirroring-mac.png`.
+The iPhone was not available to this session, so the Mac mirrored its built-in display to "Android AirPlay" from System Settings > Displays. The Mac uses the same mirroring path (H.264 stream over the legacy AirPlay protocol) that UxPlay decodes for an iPhone, so this exercises the decoder, the surface and the MediaTek SELinux policy that issue #50 is about. (Screenshot of the TV mid-session was removed before publishing: it showed the Mac desktop.)
 
 | Item | Result |
 |---|---|
@@ -164,7 +164,7 @@ One real finding for the fork: when the TV was in the Google TV ambient screensa
 
 First iPhone attempt: "Android AirPlay" was listed in the AirPlay picker but the connection spun and never completed. The TV log showed zero connection attempts and `netstat` showed no TCP traffic on port 7000, so the phone's unicast traffic was going somewhere else.
 
-Cause: the app registers its services through Android's `NsdManager`, which advertises them under the system mDNS hostname, which on Google TV is the generic `Android.local`. Another device on this LAN (192.168.40.38, it also advertises `_googlecast` and `_androidtvremote2`, so another Android TV box) already owned `Android.local`, and the TV's records were renamed to `Android-2.local` by conflict resolution. The iPhone had the earlier `Android.local` target cached for the "Android AirPlay" instance, resolved it to 192.168.40.38, where nothing listens on 7000, and spun. The Mac was unaffected because it resolved fresh.
+Cause: the app registers its services through Android's `NsdManager`, which advertises them under the system mDNS hostname, which on Google TV is the generic `Android.local`. Another device on this LAN (<tv-lan-ip>, it also advertises `_googlecast` and `_androidtvremote2`, so another Android TV box) already owned `Android.local`, and the TV's records were renamed to `Android-2.local` by conflict resolution. The iPhone had the earlier `Android.local` target cached for the "Android AirPlay" instance, resolved it to <tv-lan-ip>, where nothing listens on 7000, and spun. The Mac was unaffected because it resolved fresh.
 
 Fix applied for the test: renamed the receiver over ADB (`server_name` = "Living Room TV"), which creates records the phone has never cached. After a Wi-Fi toggle on the phone it connected first try: portrait mirror 498x1080, hardware H.264, no errors, no SELinux denials, same process. The phone sent H.264, not HEVC, so item 11 is still open.
 

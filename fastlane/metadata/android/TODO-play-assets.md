@@ -33,3 +33,8 @@ No text smaller than ~40 px; Play crops the edges on some surfaces.
 - A public source URL for the AirBack fork. GPL-3.0 requires offering the
   source to buyers; add it to the last paragraph of `full_description.txt` in
   all three locales once the repo is public.
+
+Update 2026-10-18 20:40: feature graphic (1024x500) and two TV screenshots (overview, settings) are now in
+en-US/images. Still wanted: one hero screenshot of a real mirroring session from an iPhone (Photos on a landscape
+photo or Apple Maps, nothing personal), captured with `adb exec-out screencap -p` while the session is live.
+Form answers are in PLAY-CONSOLE-ANSWERS.md.

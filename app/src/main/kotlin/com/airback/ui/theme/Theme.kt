@@ -1,28 +1,59 @@
 package com.airback.ui.theme
 
-import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
+
+// AirBack brand: near-black ground, amber accent, cool grey text. One scheme on every device;
+// TVs have no light mode worth supporting and dynamic color would wash the brand out.
+val Ground = Color(0xFF05070D)
+val Amber = Color(0xFFF59E0B)
+private val Surface1 = Color(0xFF0D1220)
+private val Surface2 = Color(0xFF131A2B)
+private val Surface3 = Color(0xFF1A2236)
+private val Ink = Color(0xFFE6E8EE)
+private val InkMuted = Color(0xFF9AA3B5)
+private val Line = Color(0xFF2A3347)
+
+private val AirBackColors = darkColorScheme(
+    primary = Amber,
+    onPrimary = Color(0xFF1A1200),
+    primaryContainer = Color(0xFF3B2A06),
+    onPrimaryContainer = Color(0xFFFFE2B0),
+    secondary = InkMuted,
+    onSecondary = Ground,
+    secondaryContainer = Surface3,
+    onSecondaryContainer = Ink,
+    tertiary = Amber,
+    onTertiary = Color(0xFF1A1200),
+    tertiaryContainer = Surface3,
+    onTertiaryContainer = Ink,
+    background = Ground,
+    onBackground = Ink,
+    surface = Ground,
+    onSurface = Ink,
+    surfaceVariant = Surface2,
+    onSurfaceVariant = InkMuted,
+    surfaceContainerLowest = Ground,
+    surfaceContainerLow = Surface1,
+    surfaceContainer = Surface1,
+    surfaceContainerHigh = Surface2,
+    surfaceContainerHighest = Surface3,
+    inverseSurface = Ink,
+    inverseOnSurface = Ground,
+    outline = Line,
+    outlineVariant = Color(0xFF1F2638),
+    error = Color(0xFFFF6B57),
+    onError = Ground,
+    errorContainer = Color(0xFF4A1A12),
+    onErrorContainer = Color(0xFFFFD9D2),
+)
 
 @Composable
 fun AirPlayTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val ctx = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(ctx) else dynamicLightColorScheme(ctx)
-        }
-        darkTheme -> darkColorScheme()
-        else -> lightColorScheme()
-    }
-
-    MaterialTheme(colorScheme = colorScheme, content = content)
+    MaterialTheme(colorScheme = AirBackColors, content = content)
 }

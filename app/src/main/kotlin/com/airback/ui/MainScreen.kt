@@ -66,6 +66,9 @@ import com.airback.viewmodel.DebugInfo
 import com.airback.viewmodel.LocalNetworkAccess
 import com.airback.viewmodel.MainViewModel
 import androidx.compose.ui.res.painterResource
+import com.airback.ui.theme.Ground
+import com.airback.ui.theme.Starfield
+import androidx.compose.material.icons.filled.Tv
 import androidx.compose.ui.res.stringResource
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSourceBitmapLoader
@@ -80,7 +83,7 @@ import kotlin.math.abs
 import kotlinx.coroutines.delay
 
 private enum class Tab(val labelRes: Int, val icon: ImageVector) {
-    OVERVIEW(R.string.tab_overview, Icons.Default.Cast),
+    OVERVIEW(R.string.tab_overview, Icons.Default.Tv),
     LOGS(R.string.tab_logs, Icons.AutoMirrored.Filled.Article),
     SETTINGS(R.string.tab_settings, Icons.Default.Settings)
 }
@@ -516,7 +519,10 @@ fun MainScreen(
             onPip = onPip
         )
     } else {
+        Box(modifier = Modifier.fillMaxSize()) {
+        Starfield(modifier = Modifier.fillMaxSize())
         Scaffold(
+            containerColor = Color.Transparent,
             bottomBar = {
                 Column {
                     AudioMiniController(
@@ -524,7 +530,7 @@ fun MainScreen(
                         visible = audioOnly && connections > 0 && tab != Tab.OVERVIEW,
                         onClick = { tab = Tab.OVERVIEW }
                     )
-                    NavigationBar {
+                    NavigationBar(containerColor = Ground.copy(alpha = 0.75f)) {
                         Tab.entries.forEach { t ->
                             NavigationBarItem(
                                 selected = tab == t,
@@ -546,6 +552,7 @@ fun MainScreen(
                     showAudioMode = audioOnly
                 )
             }
+        }
         }
     }
 
@@ -634,7 +641,7 @@ private fun OverviewContent(
                 .weight(1f)
                 .padding(16.dp)
                 .clip(RoundedCornerShape(16.dp))
-                .background(MaterialTheme.colorScheme.surfaceVariant),
+                .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.55f)),
             contentAlignment = Alignment.Center
         ) {
             val connecting = state == ServerState.RUNNING && connections > 0 &&
@@ -647,13 +654,12 @@ private fun OverviewContent(
                 }
                 if (state != ServerState.RUNNING || connections == 0) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Icon(
-                            imageVector = if (connections > 0) Icons.Default.CastConnected else Icons.Default.Cast,
+                        Image(
+                            painter = painterResource(R.drawable.ic_airback_mark),
                             contentDescription = null,
-                            modifier = Modifier.size(64.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
+                            modifier = Modifier.size(if (tv) 200.dp else 120.dp)
                         )
-                        Spacer(Modifier.height(12.dp))
+                        Spacer(Modifier.height(4.dp))
                         Text(
                             text = if (grant) stringResource(R.string.local_network_desc) else when (state) {
                                 ServerState.STOPPED -> stringResource(R.string.server_stopped)
