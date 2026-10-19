@@ -189,6 +189,17 @@ Name decided 2026-10-18: **AirBack**, package `com.airback` (checked clear on Pl
 
 Not done yet: the first-run flow that asks for the "Display over other apps" permission (granted over ADB on the test TV), the Play listing and fastlane metadata, release signing, and the versionCode reset for a 1.0.
 
+## Branding decision (2026-10-18, evening)
+
+Developer identity is deJesus.biz, so the palette comes from its brand file: dark ground and a warm accent. Final icon: glyph "D2", a TV in front with the classic return arrow inside it and a second screen (the interrupted picture) behind, amber #F59E0B on near-black #05070D with a sparse starfield. Chosen over the navy and teal first draft (generic for the category), over Apple's two-rectangle Screen Mirroring symbol the owner liked (SF Symbols may not be used in app icons), and over four other arrow treatments rendered in `design/concepts/d-variants.png`.
+
+Two facts learned on the TCL set that apply to any Google TV icon work:
+
+- The current Google TV home shows apps as circles cut from the adaptive launcher icon, not as 320x180 banners. The banner still appears in TCL's input switcher "Recent" tile. Both assets ship.
+- The circle mask clips anything outside the 66 dp safe zone, so the foreground and monochrome vectors carry a 0.8 scale group around the glyph (`design/` has the mask check that showed the clipping at 1.0).
+
+Assets: adaptive icon layers in `res/drawable` (all vector, stars included), banner `res/drawable-xxxhdpi/banner.png`, Play Store 512 px icon `design/airback-play-icon-512.png`, concept sheets in `design/concepts/`.
+
 ## Open questions for Gamalier
 
 - Mirroring stability on this TCL set is settled from both the Mac and the iPhone (see the two test result sections). The iPhone-only checklist items (4 to 7, 10, 11) still need you and the phone; items 4 and 7 are the ones with open upstream bugs.
