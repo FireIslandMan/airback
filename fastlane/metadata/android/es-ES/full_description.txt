@@ -1,0 +1,35 @@
+El vídeo con DRM de Netflix, Apple TV+ y Disney+ no lo puede recibir ningún receptor de AirPlay de terceros, AirBack incluido. Esas apps lo bloquean desde el dispositivo que envía. Todo lo demás funciona: tu pantalla, fotos, tus propios vídeos, YouTube, música, presentaciones.
+
+AirBack convierte un Google TV o Android TV en un receptor compatible con AirPlay. Duplica o envía desde un iPhone, iPad o Mac, y cuando termina la sesión la TV vuelve a lo que había. Televisión en directo, la app que estabas viendo, la entrada HDMI: fuera lo que fuera, vuelve sola. Sin anuncios, nunca. Pagas una vez, sin suscripción.
+
+Lo que AirBack hace distinto
+
+• Te devuelve tu TV. Cuando se desconecta el último dispositivo, la TV vuelve a la entrada o app anterior. Nunca te quedas en una pantalla vacía del receptor.
+• Enciende la TV y pasa al frente en cuanto un dispositivo se conecta, incluso sobre la televisión en directo o el salvapantallas.
+• Usa el nombre de tu TV como nombre del receptor, así dos TVs en la misma red nunca se confunden.
+• Sin anuncios, sin cuenta, sin seguimiento.
+• En español e inglés.
+
+Lo que recibe
+
+• Duplicación de pantalla con decodificación H.264 y H.265 (HEVC)
+• Audio con decodificación AAC-ELD, AAC-LC y ALAC, con información de la pista y carátula
+• Vídeo por HLS desde las apps que lo permiten, con reproducir, pausar y avanzar desde el mando de la TV
+• PIN opcional para que solo se conecte quien tú apruebes
+
+Ajustes para configuraciones exigentes
+
+• Resolución, fotogramas por segundo y overscan del vídeo
+• Latencia de audio y decodificador por software de respaldo
+• Imagen en imagen y cambio automático del modo de pantalla
+• Capa de diagnóstico con FPS, bitrate, códec y resolución
+
+Requisitos
+
+• Google TV o Android TV con Android 7.0 o posterior
+• El dispositivo que envía y la TV en la misma red Wi-Fi
+• El permiso "Mostrar sobre otras apps", que AirBack pide la primera vez que lo abres para poder pasar al frente cuando un dispositivo se conecta
+
+Código abierto
+
+AirBack es un fork de jqssun/android-airplay-server, construido sobre UxPlay, y se publica bajo la licencia GPL-3.0.

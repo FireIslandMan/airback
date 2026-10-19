@@ -1,12 +1,35 @@
-- Screen mirroring with H.264 and H.265 (HEVC) video decoding
-- Audio streaming with AAC-ELD, AAC-LC and ALAC audio decoding
-- Video playback with support for HLS, downloads, and remote controls
-- Music playback with track information, cover art, and remote controls
-- Support for Android TV with directional pad navigation and seeking controls
-- Support for Picture-in-Picture, automatic resolution and mode switching
-- Optional PIN authentication
-- Video resolution, overscan, and frame rate control
-- Audio latency control and support for software decoder fallback
-- Debug overlay with real-time statistics (FPS, bitrate, codec, resolution, frame count, audio volume, etc.)
-- Android native media session integration with notification controls
-- Wired secondary display over USB tethering
+DRM video from Netflix, Apple TV+ and Disney+ cannot be received by any third-party AirPlay receiver, AirBack included. Those apps block it on the sending side. Everything else works: your screen, photos, your own videos, YouTube, music, presentations.
+
+AirBack turns a Google TV or Android TV into a receiver that works with AirPlay. Mirror or cast from an iPhone, iPad or Mac, and when the session ends the TV goes back to what was on. Live TV, the app you were watching, the HDMI input: whatever it was, it comes back on its own. No ads, ever. Pay once, no subscription.
+
+What AirBack does differently
+
+• Gives you your TV back. When the last device disconnects, the TV returns to the previous input or app. You never land on a blank receiver screen.
+• Wakes the TV and comes forward the moment a device connects, even over live TV or the screensaver.
+• Uses your TV's own name as the receiver name, so two TVs on one network never collide.
+• No ads, no account, no tracking.
+• English and Spanish.
+
+What it receives
+
+• Screen mirroring with H.264 and H.265 (HEVC) decoding
+• Audio with AAC-ELD, AAC-LC and ALAC decoding, with track info and cover art
+• Video casting over HLS from apps that allow it, with play, pause and seek from the TV remote
+• Optional PIN so only people you approve can connect
+
+Settings for picky setups
+
+• Video resolution, frame rate and overscan
+• Audio latency and a software decoder fallback
+• Picture-in-picture and automatic display mode switching
+• Debug overlay with FPS, bitrate, codec and resolution
+
+Requirements
+
+• Google TV or Android TV running Android 7.0 or later
+• The sending device and the TV on the same Wi-Fi network
+• The "Display over other apps" permission, which AirBack asks for on first run so it can come forward when a device connects
+
+Open source
+
+AirBack is a fork of jqssun/android-airplay-server, built on UxPlay, and is released under the GPL-3.0 license.

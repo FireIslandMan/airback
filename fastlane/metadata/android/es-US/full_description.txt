@@ -1,0 +1,35 @@
+El video con DRM de Netflix, Apple TV+ y Disney+ no lo puede recibir ningún receptor de AirPlay de terceros, AirBack incluido. Esas apps lo bloquean desde el dispositivo que envía. Todo lo demás funciona: tu pantalla, fotos, tus propios videos, YouTube, música, presentaciones.
+
+AirBack convierte un Google TV o Android TV en un receptor compatible con AirPlay. Duplica o envía desde un iPhone, iPad o Mac, y cuando termina la sesión la TV vuelve a lo que estaba. Televisión en vivo, la app que veías, la entrada HDMI: lo que fuera, regresa solo. Sin anuncios, nunca. Pagas una vez, sin suscripción.
+
+Lo que AirBack hace distinto
+
+• Te devuelve tu TV. Cuando se desconecta el último dispositivo, la TV regresa a la entrada o app anterior. Nunca te quedas en una pantalla vacía del receptor.
+• Despierta la TV y pasa al frente en cuanto un dispositivo se conecta, incluso sobre televisión en vivo o el protector de pantalla.
+• Usa el nombre de tu TV como nombre del receptor, así dos TVs en la misma red nunca chocan.
+• Sin anuncios, sin cuenta, sin rastreo.
+• En español e inglés.
+
+Lo que recibe
+
+• Duplicación de pantalla con decodificación H.264 y H.265 (HEVC)
+• Audio con decodificación AAC-ELD, AAC-LC y ALAC, con información de la pista y carátula
+• Video por HLS desde las apps que lo permiten, con reproducir, pausar y adelantar desde el control de la TV
+• PIN opcional para que solo se conecte quien tú apruebes
+
+Ajustes para configuraciones exigentes
+
+• Resolución, cuadros por segundo y overscan del video
+• Latencia de audio y decodificador por software de respaldo
+• Imagen en imagen y cambio automático del modo de pantalla
+• Capa de diagnóstico con FPS, bitrate, códec y resolución
+
+Requisitos
+
+• Google TV o Android TV con Android 7.0 o posterior
+• El dispositivo que envía y la TV en la misma red Wi-Fi
+• El permiso "Mostrar sobre otras apps", que AirBack pide la primera vez que lo abres para poder pasar al frente cuando un dispositivo se conecta
+
+Código abierto
+
+AirBack es un fork de jqssun/android-airplay-server, construido sobre UxPlay, y se publica bajo la licencia GPL-3.0.

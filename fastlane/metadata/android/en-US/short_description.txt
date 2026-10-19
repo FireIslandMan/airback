@@ -1,1 +1,1 @@
-AirPlay receiver implementation for Android with video and audio support.
+Mirror iPhone, iPad or Mac to your TV. No ads. When you stop, the TV goes back.

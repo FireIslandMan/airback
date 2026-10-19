@@ -33,8 +33,9 @@ android {
         applicationId = "com.airback"
         minSdk = 24
         targetSdk = 37
-        versionCode = 33
-        versionName = "0.0.33"
+        // AirBack starts at 1.0.0 (1); upstream jqssun/android-airplay-server was at 0.0.33 (33) when forked.
+        versionCode = 1
+        versionName = "1.0.0"
 
         externalNativeBuild {
             cmake {
