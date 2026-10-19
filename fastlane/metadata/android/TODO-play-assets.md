@@ -38,3 +38,9 @@ Update 2026-10-18 20:40: feature graphic (1024x500) and two TV screenshots (over
 en-US/images. Still wanted: one hero screenshot of a real mirroring session from an iPhone (Photos on a landscape
 photo or Apple Maps, nothing personal), captured with `adb exec-out screencap -p` while the session is live.
 Form answers are in PLAY-CONSOLE-ANSWERS.md.
+
+Update 2026-10-18 21:05: third screenshot added, `3-iphone-safari.png`. It is an iPhone 17 Pro simulator capture of
+Safari on fajardorentals.com placed in a 1920x1080 black frame exactly as AirBack renders a portrait mirror (full
+height, centered). The simulator cannot send AirPlay, so this one is a composite, not a TV capture; replace it with a
+real `screencap` of an iPhone session when convenient. Apple Maps was skipped: the simulator shows a permanent
+"No Internet Connection" banner.
