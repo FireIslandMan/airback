@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AirBack — AirPlay for Google TV, no ads, gives your TV back</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --ground: #05070D; --panel: #0D1220; --panel2: #131A2B; --line: rgba(255,255,255,.08);
+    --amber: #F59E0B; --amber2: #FBBF24; --white: #F4F5F7; --gray: #AEB4C2; --muted: #6B7280; --green: #22C55E; --red: #EF4444;
+  }
+  html, body { max-width: 100%; overflow-x: hidden; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; background: var(--ground); color: var(--white); line-height: 1.6; overflow-x: hidden; }
+  .starfield { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  .star { position: absolute; background: #fff; border-radius: 50%; animation: twinkle 3.2s ease-in-out infinite alternate; }
+  @keyframes twinkle { 0% { opacity: .08; } 100% { opacity: .6; } }
+  section, .trust-bar { position: relative; z-index: 1; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  .es { display: block; color: var(--gray); font-size: .92em; font-weight: 400; margin-top: .25rem; }
+  .section-label { text-align: center; font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--amber); font-weight: 700; margin-bottom: .3rem; }
+  .section-title { text-align: center; font-size: clamp(1.35rem, 2.8vw, 1.9rem); font-weight: 800; margin-bottom: .35rem; letter-spacing: -0.02em; }
+  .section-sub { text-align: center; color: var(--gray); max-width: 580px; margin: 0 auto 1.75rem; font-size: .92rem; }
+  .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .85rem 1.8rem; border-radius: 100px; font-size: .95rem; font-weight: 700; text-decoration: none; transition: all .22s; border: 2px solid transparent; cursor: pointer; white-space: nowrap; }
+  .btn-amber { background: linear-gradient(135deg, #D97706, var(--amber)); color: #0B0A05; box-shadow: 0 4px 24px rgba(245,158,11,.3); }
+  .btn-amber:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(245,158,11,.45); }
+  .btn-outline { background: transparent; color: var(--white); border-color: rgba(255,255,255,.18); }
+  .btn-outline:hover { border-color: var(--amber); color: var(--amber2); }
+  .cta-row { display: flex; gap: .85rem; flex-wrap: wrap; justify-content: center; }
+  .play-badge { display: inline-flex; align-items: center; gap: .75rem; background: #111; border: 1px solid rgba(255,255,255,.2); border-radius: 12px; padding: .6rem 1.3rem .6rem 1rem; text-decoration: none; color: #fff; transition: all .22s; }
+  .play-badge:hover { border-color: var(--amber); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(245,158,11,.2); }
+  .play-badge svg { width: 26px; height: 28px; }
+  .play-badge .badge-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .play-badge .badge-sub { font-size: .6rem; letter-spacing: .05em; text-transform: uppercase; color: #ddd; }
+  .play-badge .badge-main { font-size: 1.05rem; font-weight: 600; }
+
+  .hero { min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 3.5rem 1.5rem 2.5rem; background: radial-gradient(ellipse 80% 55% at 50% -5%, rgba(245,158,11,.14) 0%, transparent 68%); }
+  .hero-badge { display: inline-flex; align-items: center; gap: .45rem; background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.3); padding: .3rem 1.1rem; border-radius: 100px; font-size: .7rem; color: var(--amber2); font-weight: 700; margin-bottom: 1.2rem; letter-spacing: .06em; text-transform: uppercase; }
+  .mark { width: 120px; height: 120px; margin-bottom: 1.2rem; }
+  .hero h1 { font-size: clamp(2.1rem, 5.5vw, 3.6rem); font-weight: 900; line-height: 1.07; margin-bottom: .85rem; letter-spacing: -0.028em; }
+  .hero h1 .amber { color: var(--amber); }
+  .hero p.subtitle { font-size: clamp(.95rem, 1.6vw, 1.1rem); color: var(--gray); max-width: 620px; margin-bottom: 1.2rem; }
+  .hero-price-wrap { display: flex; align-items: center; gap: .6rem; justify-content: center; margin-bottom: 1.6rem; flex-wrap: wrap; }
+  .hero-price-tag { background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.3); color: var(--green); padding: .35rem 1.1rem; border-radius: 100px; font-size: .88rem; font-weight: 700; }
+  .hero-price-tag .price-amt { font-size: 1.15rem; font-weight: 900; }
+  .hero-price-note { color: var(--muted); font-size: .8rem; }
+
+  .trust-bar { background: rgba(255,255,255,.02); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: .85rem 1.5rem; }
+  .trust-bar-inner { max-width: 920px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+  .trust-item { display: flex; align-items: center; gap: .45rem; font-size: .82rem; color: var(--gray); font-weight: 500; }
+  .trust-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); flex-shrink: 0; }
+
+  .problem { padding: 3rem 1.5rem; }
+  .compare { max-width: 820px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: .9rem; }
+  .compare-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 1.3rem 1.4rem; }
+  .compare-card h3 { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; margin-bottom: .8rem; font-weight: 800; }
+  .compare-card.bad h3 { color: var(--red); } .compare-card.good h3 { color: var(--green); }
+  .compare-card li { list-style: none; padding: .45rem 0; border-top: 1px solid var(--line); font-size: .9rem; color: var(--gray); }
+  .compare-card li:first-of-type { border-top: 0; }
+  .compare-card.good li { color: var(--white); }
+  .compare-card li b { color: var(--white); }
+
+  .features { padding: 3rem 1.5rem; background: linear-gradient(180deg, transparent, rgba(13,18,32,.8)); }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: .8rem; }
+  .feature-card { background: rgba(255,255,255,.035); border: 1px solid var(--line); border-radius: 14px; padding: 1.2rem 1.3rem; transition: all .25s; }
+  .feature-card:hover { border-color: rgba(245,158,11,.35); transform: translateY(-3px); }
+  .feature-card .ico { width: 38px; height: 38px; border-radius: 10px; background: rgba(245,158,11,.12); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: .6rem; }
+  .feature-card h3 { font-size: .98rem; font-weight: 700; }
+  .feature-card p { color: var(--gray); font-size: .86rem; margin-top: .25rem; }
+
+  .limits { padding: 2.4rem 1.5rem; background: rgba(239,68,68,.04); border-top: 1px solid rgba(239,68,68,.14); border-bottom: 1px solid rgba(239,68,68,.14); text-align: center; }
+  .limits-inner { max-width: 720px; margin: 0 auto; }
+  .limits h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: .5rem; }
+  .limits p { color: var(--gray); font-size: .92rem; }
+  .limits p b { color: var(--white); }
+
+  .how { padding: 3rem 1.5rem; }
+  .steps { max-width: 760px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: .8rem; }
+  .step { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 1.2rem; text-align: center; }
+  .step .n { width: 34px; height: 34px; border-radius: 50%; background: var(--amber); color: #0B0A05; font-weight: 900; display: inline-flex; align-items: center; justify-content: center; margin-bottom: .6rem; }
+  .step h3 { font-size: .95rem; font-weight: 700; } .step p { color: var(--gray); font-size: .85rem; margin-top: .2rem; }
+
+  .bottom-cta { padding: 3rem 1.5rem 2.5rem; text-align: center; background: radial-gradient(ellipse 70% 55% at 50% 110%, rgba(245,158,11,.14) 0%, transparent 70%); }
+  .bottom-cta h2 { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 900; margin-bottom: .5rem; letter-spacing: -.02em; }
+  .bottom-cta p { color: var(--gray); margin-bottom: 1.4rem; }
+  .foot { margin-top: 1.6rem; font-size: .8rem; color: var(--muted); }
+  .foot a { color: var(--gray); text-decoration: none; margin: 0 .5rem; }
+  .foot a:hover { color: var(--amber2); }
+</style>
+</head>
+<body>
+<div class="starfield" id="starfield"></div>
+
+<section class="hero">
+  <div class="hero-badge">Google Play &bull; Google TV &amp; Android TV</div>
+  <svg class="mark" viewBox="0 0 108 108" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M36 40V28a4 4 0 0 1 4-4h42a4 4 0 0 1 4 4v26a4 4 0 0 1-4 4H72"/>
+    <path d="M26 40h42a4 4 0 0 1 4 4v26a4 4 0 0 1-4 4H26a4 4 0 0 1-4-4V44a4 4 0 0 1 4-4z" fill="#05070D"/>
+    <path d="M47 76v6M36 84h22"/>
+    <path d="M62 51H44a6 6 0 0 0 0 12h10" stroke="#F59E0B"/>
+    <path d="M52 57l9 6-9 6z" fill="#F59E0B" stroke="none"/>
+  </svg>
+  <h1>AirPlay for your TV.<br><span class="amber">No ads. Gives your TV back.</span></h1>
+  <p class="subtitle">AirBack turns a Google TV or Android TV into an AirPlay receiver for your iPhone, iPad and Mac. When you stop mirroring, the TV goes right back to what it was showing.
+    <span class="es">AirBack convierte tu Google TV o Android TV en un receptor AirPlay para iPhone, iPad y Mac. Al dejar de duplicar, la TV vuelve a lo que estaba mostrando.</span></p>
+  <div class="hero-price-wrap">
+    <span class="hero-price-tag"><span class="price-amt">$3.99</span>&nbsp; One-Time</span>
+    <span class="hero-price-note">No subscription. No in-app purchases. Open source.</span>
+  </div>
+  <div class="cta-row">
+    <a href="https://play.google.com/store/apps/details?id=com.airback" target="_blank" rel="noopener" class="play-badge">
+      <svg viewBox="0 0 24 26" aria-hidden="true"><path d="M1 1.5v23l12-11.5z" fill="#34A853"/><path d="M13 13l4-3.9L4 1.4z" fill="#4285F4"/><path d="M13 13l4 3.9L4 24.6z" fill="#EA4335"/><path d="M17 9.1l5 2.9-5 2.9-4-2.9z" fill="#FBBC04"/></svg>
+      <span class="badge-text"><span class="badge-sub">Get it on</span><span class="badge-main">Google Play</span></span>
+    </a>
+    <a href="#how" class="btn btn-outline">How it works</a>
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <span class="trust-item"><span class="dot"></span>Google TV &amp; Android TV 10+</span>
+    <span class="trust-item"><span class="dot"></span>No ads, no account, no analytics</span>
+    <span class="trust-item"><span class="dot"></span>English and Spanish</span>
+    <span class="trust-item"><span class="dot"></span>GPL-3.0 open source</span>
+    <span class="trust-item"><span class="dot"></span>Built in Puerto Rico</span>
+  </div>
+</div>
+
+<section class="problem">
+  <div class="container">
+    <p class="section-label">Why another receiver</p>
+    <h2 class="section-title">The free ones make you pay in other ways <span class="es">Los gratuitos te cobran de otra forma</span></h2>
+    <p class="section-sub">Ad-supported AirPlay receivers interrupt you, spin forever when the TV is on another input, and leave the TV stuck on their idle screen when you're done.</p>
+    <div class="compare">
+      <div class="compare-card bad">
+        <h3>Ad-supported receivers</h3>
+        <ul>
+          <li>Full-screen ads before and after every session</li>
+          <li>Your iPhone shows a spinner when the TV is asleep or on cable</li>
+          <li>Disconnect, and the TV sits on their logo until you grab the remote</li>
+          <li>A subscription to remove the ads</li>
+        </ul>
+      </div>
+      <div class="compare-card good">
+        <h3>AirBack</h3>
+        <ul>
+          <li><b>No ads.</b> Ever. One price.</li>
+          <li><b>Comes forward on connect,</b> even from the screensaver or another input</li>
+          <li><b>Steps back on disconnect,</b> so the TV returns to live TV or the app you had open</li>
+          <li><b>Shows up under your TV's own name</b> with nothing to configure</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="container">
+    <p class="section-label">What it does</p>
+    <h2 class="section-title">Mirror. Watch. Get your TV back. <span class="es">Duplica. Mira. Recupera tu TV.</span></h2>
+    <div class="features-grid">
+      <div class="feature-card"><div class="ico">↩︎</div><h3>Auto-restore on disconnect</h3><p>When the last sender drops, AirBack steps back to whatever was showing before: the HDMI input, YouTube, the home screen. <span class="es">Al desconectar, la TV vuelve a lo que estaba mostrando.</span></p></div>
+      <div class="feature-card"><div class="ico">📺</div><h3>Your TV's own name</h3><p>It advertises the name you gave the TV in Android settings, so your devices already know it. <span class="es">Aparece con el nombre de tu TV.</span></p></div>
+      <div class="feature-card"><div class="ico">⚡</div><h3>Wakes the screen</h3><p>Connect while the TV is on the screensaver and the picture is up in under a second. <span class="es">Despierta la pantalla al conectar.</span></p></div>
+      <div class="feature-card"><div class="ico">🖥</div><h3>iPhone, iPad and Mac</h3><p>Screen mirroring and AirPlay video from any Apple device on the same Wi-Fi. <span class="es">Desde cualquier dispositivo Apple en la misma red.</span></p></div>
+      <div class="feature-card"><div class="ico">🔒</div><h3>Nothing leaves your network</h3><p>No account, no analytics, no advertising SDK. The source is public, so you can check. <span class="es">Sin cuenta, sin analítica, sin anuncios.</span></p></div>
+      <div class="feature-card"><div class="ico">🇵🇷</div><h3>English and Spanish</h3><p>The whole app, both languages, from day one. <span class="es">Toda la app en inglés y español.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="limits">
+  <div class="limits-inner">
+    <h2>Honest limits <span class="es">Límites, sin letra pequeña</span></h2>
+    <p><b>Netflix, Apple TV+ and Disney+ block every third-party AirPlay receiver</b> on the sending side (DRM). Nothing AirBack can do about that. Everything else works: your screen, photos, your own videos, YouTube, music, presentations. Your TV and your Apple device need to be on the same network.</p>
+    <p class="es" style="margin-top:.6rem">Netflix, Apple TV+ y Disney+ bloquean todo receptor AirPlay de terceros (DRM). Lo demás funciona: tu pantalla, fotos, tus videos, YouTube, música, presentaciones.</p>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="container">
+    <p class="section-label">How it works</p>
+    <h2 class="section-title">Three taps on the iPhone <span class="es">Tres toques en el iPhone</span></h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Install AirBack on the TV</h3><p>From Google Play. Allow "Display over other apps" when asked, once. <span class="es">Instálalo desde Google Play.</span></p></div>
+      <div class="step"><div class="n">2</div><h3>Control Center → Screen Mirroring</h3><p>Pick your TV by name. <span class="es">Centro de control → Duplicar pantalla → tu TV.</span></p></div>
+      <div class="step"><div class="n">3</div><h3>Stop when you're done</h3><p>The TV goes back to what it was showing. <span class="es">Al terminar, la TV vuelve sola.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="bottom-cta">
+  <h2>$3.99 once. No ads, forever. <span class="es">$3.99 una vez. Sin anuncios, para siempre.</span></h2>
+  <p>Paid through Google Play. Source code under GPL-3.0.</p>
+  <div class="cta-row">
+    <a href="https://play.google.com/store/apps/details?id=com.airback" target="_blank" rel="noopener" class="play-badge">
+      <svg viewBox="0 0 24 26" aria-hidden="true"><path d="M1 1.5v23l12-11.5z" fill="#34A853"/><path d="M13 13l4-3.9L4 1.4z" fill="#4285F4"/><path d="M13 13l4 3.9L4 24.6z" fill="#EA4335"/><path d="M17 9.1l5 2.9-5 2.9-4-2.9z" fill="#FBBC04"/></svg>
+      <span class="badge-text"><span class="badge-sub">Get it on</span><span class="badge-main">Google Play</span></span>
+    </a>
+    <a href="https://github.com/FireIslandMan/airback" target="_blank" rel="noopener" class="btn btn-outline">Source on GitHub</a>
+  </div>
+  <p class="foot">
+    <a href="https://www.dejesus.biz/airback-privacy" target="_top">Privacy policy</a> &middot;
+    <a href="https://www.dejesus.biz/airback-terms" target="_top">Terms</a> &middot;
+    <a href="mailto:dejesusbiz@gmail.com">Support</a><br>
+    AirBack is built on UxPlay and jqssun's Android port. Google Play and the Google Play logo are trademarks of Google LLC. AirPlay is a trademark of Apple Inc.
+  </p>
+</section>
+
+<script>
+  (function () {
+    var sf = document.getElementById('starfield'); if (!sf) return;
+    for (var i = 0; i < 140; i++) {
+      var s = document.createElement('div'); s.className = 'star';
+      var sz = Math.random() * 2 + 0.6;
+      s.style.width = s.style.height = sz + 'px';
+      s.style.left = Math.random() * 100 + '%'; s.style.top = Math.random() * 100 + '%';
+      s.style.animationDelay = (Math.random() * 3) + 's';
+      if (Math.random() < 0.12) s.style.background = '#F59E0B';
+      sf.appendChild(s);
+    }
+  })();
+</script>
+</body>
+</html>

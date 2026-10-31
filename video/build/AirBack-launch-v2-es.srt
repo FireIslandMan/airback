@@ -1,0 +1,47 @@
+1
+00:00:00,700 --> 00:00:03,800
+El receptor AirPlay de tu TV no debería mostrarte anuncios.
+
+2
+00:00:05,100 --> 00:00:08,700
+AirBack. Receptor AirPlay para Google TV.
+
+3
+00:00:10,000 --> 00:00:16,100
+Aparece con el nombre de tu TV. Nada que configurar.
+
+4
+00:00:17,400 --> 00:00:23,000
+Estás viendo algo. Alguien se conecta. AirBack pasa al frente.
+
+5
+00:00:24,300 --> 00:00:30,900
+Centro de control, Duplicar pantalla, toca tu TV.
+
+6
+00:00:32,200 --> 00:00:37,300
+Duplica tu Mac, iPhone o iPad. Fotos, web, presentaciones, tus videos.
+
+7
+00:00:38,600 --> 00:00:43,700
+Tus propios videos, a pantalla completa, sin cable.
+
+8
+00:00:45,000 --> 00:00:50,600
+Deja de duplicar. La TV vuelve a lo que estaba mostrando.
+
+9
+00:00:51,900 --> 00:00:57,500
+Igual con TV en vivo: vuelve a la entrada en la que estabas.
+
+10
+00:00:58,800 --> 00:01:04,900
+Cámbiale el nombre. "Volver al desconectar" activado. Inglés y español.
+
+11
+00:01:06,200 --> 00:01:11,300
+Sin anuncios. Sin suscripción. $3.99 una vez. Código abierto, GPL-3.0.
+
+12
+00:01:12,600 --> 00:01:18,700
+Netflix, Apple TV+ y Disney+ bloquean todo receptor AirPlay de terceros. Lo demás funciona.

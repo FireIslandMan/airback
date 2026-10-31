@@ -10,3 +10,15 @@
 .cxx/
 
 *.jks
+# video takes and renders are large; keep sources out of git
+video/src/*.mp4
+video/src/*.wav
+video/src/*.png
+video/src/veo-raw/
+video/build/*.mp4
+video/build/seg/
+video/build/seg2/
+video/build/*.png
+video/mkcard
+video/axpop
+site/*.inject.js

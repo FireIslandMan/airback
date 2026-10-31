@@ -15,7 +15,7 @@ Prepared 2026-10-18. Use these when filling the forms; the Console wording chang
 
 ## Privacy policy
 
-Required for every app. Publish a short page at https://dejesus.biz/airback/privacy saying: AirBack runs entirely on the user's local network; it does not collect, store or transmit personal data to the developer or any third party; mirrored content is decoded on the device and never leaves it; no analytics, no ads, no accounts. Logs the user exports from the Logs tab stay on the device unless the user shares them.
+Required for every app. LIVE at https://www.dejesus.biz/airback-privacy (terms at https://www.dejesus.biz/airback-terms; product page https://www.dejesus.biz/listing/airback; mirror https://fireislandman.github.io/airback/privacy.html). Set this URL in Play Console > App content > Privacy policy. The page says: AirBack runs entirely on the user's local network; it does not collect, store or transmit personal data to the developer or any third party; mirrored content is decoded on the device and never leaves it; no analytics, no ads, no accounts. Logs the user exports from the Logs tab stay on the device unless the user shares them.
 
 ## Data safety form
 

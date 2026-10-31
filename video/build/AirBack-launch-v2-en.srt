@@ -1,0 +1,47 @@
+1
+00:00:00,700 --> 00:00:03,800
+Your TV's AirPlay receiver shouldn't show you ads.
+
+2
+00:00:05,100 --> 00:00:08,700
+AirBack. AirPlay receiver for Google TV.
+
+3
+00:00:10,000 --> 00:00:16,100
+It shows up under your TV's own name. Nothing to configure.
+
+4
+00:00:17,400 --> 00:00:23,000
+You're watching something. Someone connects. AirBack comes forward.
+
+5
+00:00:24,300 --> 00:00:30,900
+Control Center, Screen Mirroring, tap your TV.
+
+6
+00:00:32,200 --> 00:00:37,300
+Mirror your Mac, iPhone or iPad. Photos, web, slides, your own videos.
+
+7
+00:00:38,600 --> 00:00:43,700
+Your own videos, full screen, no cable.
+
+8
+00:00:45,000 --> 00:00:50,600
+Stop mirroring. The TV goes back to what it was showing.
+
+9
+00:00:51,900 --> 00:00:57,500
+Same thing with live TV: it goes back to the input you were on.
+
+10
+00:00:58,800 --> 00:01:04,900
+Rename it. Keep "return on disconnect" on. English and Spanish.
+
+11
+00:01:06,200 --> 00:01:11,300
+No ads. No subscription. $3.99 once. Open source, GPL-3.0.
+
+12
+00:01:12,600 --> 00:01:18,700
+Netflix, Apple TV+ and Disney+ block every third-party AirPlay receiver. Everything else works.
