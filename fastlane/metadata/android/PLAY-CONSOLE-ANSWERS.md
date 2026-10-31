@@ -58,3 +58,8 @@ Required for every app. Canonical: https://airback.io/privacy.html (Netlify site
 - App signing: let Play manage the app signing key; upload with `~/Keys/airback-upload.jks` (alias airback). Passwords are in the macOS login keychain under "AirBack upload keystore".
 - Release notes 1.0.0 (EN): First release. AirPlay receiver for Google TV with auto-restore: when the session ends, your TV goes back to what was on. No ads. English and Spanish.
 - Release notes 1.0.0 (ES): Primera versión. Receptor AirPlay para Google TV con restauración automática: al terminar la sesión, el televisor vuelve a lo que estaba viendo. Sin anuncios. En inglés y español.
+
+## Done in Console on 2026-10-31
+- Store settings: category Tools; contact email hi@airback.io; website airback.io.
+- App content > Privacy policy: https://www.dejesus.biz/airback-privacy (swap to https://airback.io/privacy.html once DNS resolves).
+- Default store listing: all assets uploaded, status "Ready to send for review".
