@@ -32,7 +32,7 @@ Price: $3.99, once. Open source under GPL-3.0.
 Get it: [Play Store link once the listing is live]
 Website: https://airback.io
 Support: hi@airback.io
-Source: https://github.com/FireIslandMan/airback
+Source: https://github.com/deJesusbiz/airback
 Privacy: https://airback.io/privacy.html
 
 Built on UxPlay and jqssun's Android port. Living and Learning, Puerto Rico.
@@ -48,7 +48,7 @@ Límites honestos: Netflix, Apple TV+ y Disney+ bloquean todo receptor AirPlay d
 Precio: $3.99, una sola vez. Código abierto bajo GPL-3.0.
 Descárgalo: [enlace a Play Store cuando la ficha esté publicada]
 Sitio: https://airback.io · Soporte: hi@airback.io
-Código fuente: https://github.com/FireIslandMan/airback
+Código fuente: https://github.com/deJesusbiz/airback
 
 ## Tags
 airplay, google tv, android tv, screen mirroring, airplay receiver, mirror iphone to tv, mirror mac to tv, airscreen alternative, tcl google tv, airplay android, open source, living and learning

@@ -15,7 +15,7 @@ TL;DR: 75-second 1080p demo for YouTube and the Play listing's promo-video slot.
 | 7 | 0:46–0:54 | TV capture: mirror stops, TV snaps back to YouTube | Stop mirroring. The TV goes back to what it was showing. | Deja de duplicar. La TV vuelve a lo que estaba mostrando. |
 | 8 | 0:54–1:02 | TV capture: Settings screen, Spanish strings visible | Rename it. Keep "return on disconnect" on. English and Spanish. | Cámbiale el nombre. "Volver al desconectar" activado. Inglés y español. |
 | 9 | 1:02–1:09 | Card | No ads. No subscription. $3.99 once. Open source, GPL-3.0. | Sin anuncios. Sin suscripción. $3.99 una vez. Código abierto, GPL-3.0. |
-| 10 | 1:09–1:15 | End card: mark, "AirBack on Google Play", github.com/FireIslandMan/airback. Small print: DRM line | Netflix, Apple TV+ and Disney+ block every third-party AirPlay receiver. Everything else works. | Netflix, Apple TV+ y Disney+ bloquean todo receptor AirPlay de terceros. Lo demás funciona. |
+| 10 | 1:09–1:15 | End card: mark, "AirBack on Google Play", github.com/deJesusbiz/airback. Small print: DRM line | Netflix, Apple TV+ and Disney+ block every third-party AirPlay receiver. Everything else works. | Netflix, Apple TV+ y Disney+ bloquean todo receptor AirPlay de terceros. Lo demás funciona. |
 
 ## Captures
 

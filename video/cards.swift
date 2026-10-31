@@ -157,7 +157,7 @@ case "end":
     mark(x: Double(W) / 2 - 110, y: Double(H) - 420, s: 220)
     _ = draw("AirBack", size: 84, weight: .bold, color: white, y: Double(H) - 530, maxW: Double(W))
     _ = draw("Get it on Google Play  ·  Consíguelo en Google Play", size: 42, weight: .semibold, color: amber, y: Double(H) - 620, maxW: Double(W))
-    _ = draw("Source: github.com/FireIslandMan/airback  ·  GPL-3.0", size: 32, weight: .medium, color: grey, y: Double(H) - 690, maxW: Double(W))
+    _ = draw("Source: github.com/deJesusbiz/airback  ·  GPL-3.0", size: 32, weight: .medium, color: grey, y: Double(H) - 690, maxW: Double(W))
     let (en, es) = split(text)
     _ = draw(en, size: 28, weight: .regular, color: grey, y: 150, maxW: Double(W) * 0.8)
     if !es.isEmpty { _ = draw(es, size: 24, weight: .regular, color: grey.withAlphaComponent(0.8), y: 100, maxW: Double(W) * 0.8) }
