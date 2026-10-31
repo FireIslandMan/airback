@@ -15,7 +15,7 @@ Prepared 2026-10-18. Use these when filling the forms; the Console wording chang
 
 ## Privacy policy
 
-Required for every app. LIVE at https://www.dejesus.biz/airback-privacy (terms at https://www.dejesus.biz/airback-terms; product page https://www.dejesus.biz/listing/airback; mirror https://fireislandman.github.io/airback/privacy.html). Set this URL in Play Console > App content > Privacy policy. The page says: AirBack runs entirely on the user's local network; it does not collect, store or transmit personal data to the developer or any third party; mirrored content is decoded on the device and never leaves it; no analytics, no ads, no accounts. Logs the user exports from the Logs tab stay on the device unless the user shares them.
+Required for every app. Canonical: https://airback.io/privacy.html (Netlify site airback-io, repo AIRBACK-SITE; terms https://airback.io/terms.html; product page https://airback.io). Mirror on dejesus.biz: https://www.dejesus.biz/airback-privacy, /airback-terms, /listing/airback; mirror https://fireislandman.github.io/airback/privacy.html). Set the airback.io URL in Play Console > App content > Privacy policy once DNS resolves (dejesus.biz URL is set there meanwhile). Support email for the listing: hi@airback.io (IONOS mailbox). The page says: AirBack runs entirely on the user's local network; it does not collect, store or transmit personal data to the developer or any third party; mirrored content is decoded on the device and never leaves it; no analytics, no ads, no accounts. Logs the user exports from the Logs tab stay on the device unless the user shares them.
 
 ## Data safety form
 
