@@ -15,7 +15,7 @@ Prepared 2026-10-18. Use these when filling the forms; the Console wording chang
 
 ## Privacy policy
 
-Required for every app. Canonical: https://airback.io/privacy.html (Netlify site airback-io, repo AIRBACK-SITE; terms https://airback.io/terms.html; product page https://airback.io). Mirror on dejesus.biz: https://www.dejesus.biz/airback-privacy, /airback-terms, /listing/airback; mirror https://fireislandman.github.io/airback/privacy.html). Set the airback.io URL in Play Console > App content > Privacy policy once DNS resolves (dejesus.biz URL is set there meanwhile). Support email for the listing: hi@airback.io (IONOS mailbox). The page says: AirBack runs entirely on the user's local network; it does not collect, store or transmit personal data to the developer or any third party; mirrored content is decoded on the device and never leaves it; no analytics, no ads, no accounts. Logs the user exports from the Logs tab stay on the device unless the user shares them.
+Required for every app. Canonical: https://airback.io/privacy.html (Netlify site airback-io, repo AIRBACK-SITE; terms https://airback.io/terms.html; product page https://airback.io). Mirror on dejesus.biz: https://www.dejesus.biz/airback-privacy, /airback-terms, /listing/airback; mirror https://fireislandman.github.io/airback/privacy.html). Play Console > App content > Privacy policy points at the airback.io URL. Support email for the listing: hi@airback.io (IONOS mailbox). The page says: AirBack runs entirely on the user's local network; it does not collect, store or transmit personal data to the developer or any third party; mirrored content is decoded on the device and never leaves it; no analytics, no ads, no accounts. Logs the user exports from the Logs tab stay on the device unless the user shares them.
 
 ## Data safety form
 
@@ -61,5 +61,5 @@ Required for every app. Canonical: https://airback.io/privacy.html (Netlify site
 
 ## Done in Console on 2026-10-31
 - Store settings: category Tools; contact email hi@airback.io; website airback.io.
-- App content > Privacy policy: https://www.dejesus.biz/airback-privacy (swap to https://airback.io/privacy.html once DNS resolves).
+- App content > Privacy policy: https://airback.io/privacy.html (live over HTTPS since 2026-10-31 evening; dejesus.biz/airback-privacy stays as a mirror).
 - Default store listing: all assets uploaded, status "Ready to send for review".
